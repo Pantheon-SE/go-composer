@@ -1,0 +1,37 @@
+{
+    "name": "pantheon-se/go-composer",
+    "type": "composer-plugin",
+    "description": "Installs Go into vendor/bin",
+    "license": "MIT",
+    "keywords": [
+        "go",
+        "php"
+    ],
+    "homepage": "https://github.com/pantheon-se/go-composer",
+    "authors": [
+        {
+            "name": "Marius Büscher",
+            "email": "marius.buescher@gmx.de"
+        },
+        {
+            "name": "Kyle Taylor",
+            "email": "kyletaylored@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PantheonSalesEngineering\\GoComposer\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=7.1",
+        "composer/composer": ">=2.0",
+        "composer-plugin-api": ">=2.0",
+        "symfony/process": ">=3.3",
+        "ext-zip": "*",
+        "ext-json": "*"
+    },
+    "extra": {
+        "class": "PantheonSalesEngineering\\GoComposer\\GoComposerPlugin"
+    }
+}

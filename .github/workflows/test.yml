@@ -1,0 +1,99 @@
+name: Validation Tests
+
+on:
+  push:
+    branches:
+      - 2.x
+  pull_request:
+    branches:
+      - 2.x
+
+jobs:
+  run:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      max-parallel: 2
+      matrix:
+        composer:
+          - 2
+        os:
+          - windows-latest
+          - ubuntu-latest
+        php:
+          - 7.4
+          - 8.0
+          - 8.1
+          - 8.2
+
+    name: PHP ${{ matrix.php }}; Composer ${{ matrix.composer }}; ${{ matrix.os }}
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@master
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: curl, json, mbstring, pcre
+          ini-values: memory_limit=512M
+          tools: composer:v${{ matrix.composer }}
+
+      - name: Check PHP Version
+        run: php -v
+
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          path: test
+
+      - name: Test simply package install (as not required; standalone)
+        run: composer install --no-progress --no-dev --prefer-dist --optimize-autoloader
+        working-directory: test
+
+      - name: Creating test_app path for dummy project...
+        run: mkdir test_app
+
+      - name: Creating test_app/composer.json...
+        uses: DamianReeves/write-file-action@v1.0
+        with:
+          path: test_app/composer.json
+          write-mode: overwrite
+          contents: |
+            {
+              "name": "dummy/dummy",
+              "description": "Dummy project to test if configuration works",
+              "require": {
+                "pantheon-se/go-composer": "@dev"
+              },
+              "repositories": [
+                {
+                  "type": "path",
+                  "url": "../test/"
+                }
+              ],
+              "extra": {
+                "pantheon-se": {
+                  "go-composer": {
+                    
+                  }
+                }
+              },
+              "config": {
+                "optimize-autoloader": true,
+                "sort-packages": true,
+                "bin-dir": "bin",
+                "allow-plugins": {
+                  "pantheon-se/go-composer": true
+                }
+              }
+            }
+      - name: Trying to install test_app...
+        run: composer install --no-progress --no-dev --optimize-autoloader -vvv
+        working-directory: test_app
+
+      - name: Test if installed go is working... (Windows)
+        run: go version
+        working-directory: .\test_app\bin
+        if: matrix.os == 'windows-latest'
+
+      - name: Test if installed go is working... (Not Windows)
+        run: go version
+        working-directory: ./test_app/bin
+        if: matrix.os != 'windows-latest'
