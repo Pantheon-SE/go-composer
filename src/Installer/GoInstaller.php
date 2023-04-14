@@ -32,7 +32,7 @@ class GoInstaller extends Installer
             'go' => [
                 'nix' => 'bin/go',
                 'link' => 'go',
-                'win' => 'go.exe',
+                'win' => 'bin/go.exe',
             ]
         ];
 
