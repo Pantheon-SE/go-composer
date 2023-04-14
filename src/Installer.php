@@ -153,7 +153,7 @@ class Installer implements InstallerInterface
                 $version,
                 strtolower($this->context->getOsType()),
                 ArchitectureMap::getGoArchitecture($this->context->getSystemArchitecture()),
-                $this->context->getOsType() === 'win' ? 'zip' : 'tar.gz'
+                $this->context->getOsType() === 'windows' ? 'zip' : 'tar.gz'
             ],
             $this->downloadUriTemplate
         );
@@ -178,7 +178,7 @@ class Installer implements InstallerInterface
             $link = $targetDir . DIRECTORY_SEPARATOR . $exec['link'];
             $fs->unlinkBin($link);
             // If Windows, replace with win executable.
-            $execFile = ($this->context->getOsType() === 'win') ? $exec['win'] : $exec['nix'];
+            $execFile = ($this->context->getOsType() === 'windows') ? $exec['win'] : $exec['nix'];
 
             $path = realpath($sourceDir . DIRECTORY_SEPARATOR . $execFile);
             $fs->linkBin($path, $link);

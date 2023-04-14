@@ -43,7 +43,7 @@ class GoContext
 
         $this->osType = $osType;
         if (!$this->osType) {
-            $this->osType = stripos(PHP_OS, 'WIN') === 0 ? 'win' : strtolower(PHP_OS);
+            $this->osType = stripos(PHP_OS, 'WIN') === 0 ? 'windows' : strtolower(PHP_OS);
         }
 
         $this->systemArchitecture = is_string($systemArchitecture) ? $systemArchitecture : php_uname('m');

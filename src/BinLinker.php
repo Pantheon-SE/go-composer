@@ -56,7 +56,7 @@ class BinLinker
      */
     public function linkBin(string $from, string $to)
     {
-        if ($this->osType === 'win') {
+        if ($this->osType === 'windows') {
             $this->filesystem->dumpFile(
                 $to . '.bat',
                 $this->generateBatchCode($from)
@@ -101,7 +101,7 @@ class BinLinker
     public function unlinkBin(string $to): bool
     {
         // Windows
-        if ($this->osType === 'win') {
+        if ($this->osType === 'windows') {
             if ($this->filesystem->exists($to . '.bat')) {
                 $this->filesystem->remove($to . '.bat');
                 return true;
