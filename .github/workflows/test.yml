@@ -72,7 +72,7 @@ jobs:
               "extra": {
                 "pantheon-se": {
                   "go-composer": {
-                    
+                    "go-version": "1.19.8"
                   }
                 }
               },
