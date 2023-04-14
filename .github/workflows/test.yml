@@ -19,7 +19,7 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
-          - darwin-latest
+          - macos-latest
         php:
           - 7.4
           - 8.0
@@ -52,7 +52,7 @@ jobs:
         run: mkdir test_app
 
       - name: Creating test_app/composer.json...
-        uses: DamianReeves/write-file-action@v1.0
+        uses: DamianReeves/write-file-action@v1.2
         with:
           path: test_app/composer.json
           write-mode: overwrite
