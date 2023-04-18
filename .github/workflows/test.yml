@@ -8,11 +8,14 @@ on:
     branches:
       - 1.x
 
+env:
+  GO_VERSION_TEST: "1.19.8"
+
 jobs:
   run:
     runs-on: ${{ matrix.os }}
     strategy:
-      max-parallel: 2
+      max-parallel: 4
       matrix:
         composer:
           - 2
@@ -72,7 +75,7 @@ jobs:
               "extra": {
                 "pantheon-se": {
                   "go-composer": {
-                    "go-version": "1.19.8"
+                    "go-version": "${{ env.GO_VERSION_TEST }}"
                   }
                 }
               },
@@ -85,16 +88,17 @@ jobs:
                 }
               }
             }
+      
       - name: Trying to install test_app...
         run: composer install --no-progress --no-dev --optimize-autoloader -vvv
         working-directory: test_app
 
       - name: Test if installed go is working... (Windows)
-        run: go version
+        run: ./go.bat version
         working-directory: .\test_app\bin
         if: matrix.os == 'windows-latest'
 
       - name: Test if installed go is working... (Not Windows)
-        run: go version
+        run: ./go version
         working-directory: ./test_app/bin
         if: matrix.os != 'windows-latest'
