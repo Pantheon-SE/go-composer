@@ -94,22 +94,18 @@ jobs:
 
       - name: Test if installed go is working... (Windows)
         id: test-windows
-        run: ./go.bat version
+        run: |
+          if (.\go.bat version | Select-String -Pattern "${{ env.GO_VERSION_TEST }}") {
+            echo "Nix version: matched"
+          }
         working-directory: .\test_app\bin
         if: matrix.os == 'windows-latest'
 
       - name: Test if installed go is working... (Not Windows)
         id: test-nix
-        run: ./go version
+        run: |
+          if $(./go version) | grep "${{ env.GO_VERSION_TEST }}"; then
+            echo "Nix version: matched"
+          fi
         working-directory: ./test_app/bin
-        if: matrix.os != 'windows-latest'
-
-      - name: Version check (Windows)
-        if: contains(steps.test-windows.run.output, env.GO_VERSION_TEST)
-        run: echo "Windows version: matched"
-        if: matrix.os == 'windows-latest'
-      
-      - name: Version check (Nix)
-        if: contains(steps.test-nix.run.output, env.GO_VERSION_TEST)
-        run: echo "Nix version: matched"
         if: matrix.os != 'windows-latest'
