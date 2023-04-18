@@ -100,6 +100,6 @@ jobs:
 
       - name: Test if installed go is working... (Not Windows)
         id: test-nix
-        run: ./go version) | grep "${{ env.GO_VERSION_TEST }}"
+        run: ./go version | grep "${{ env.GO_VERSION_TEST }}"
         working-directory: ./test_app/bin
         if: matrix.os != 'windows-latest'
