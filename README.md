@@ -1,4 +1,4 @@
-[![License](https://img.shields.io/packagist/l/pantheon-se/go-composer)](LICENSE) [![Packagist Version](https://img.shields.io/packagist/v/pantheon-se/go-composer)](https://packagist.org/packages/pantheon-se/go-composer) [![Tests](https://github.com/pantheon-se/go-composer/actions/workflows/test.yml/badge.svg?branch=2.x)](https://github.com/Pantheon-SE/go-composer/actions)
+[![License](https://img.shields.io/packagist/l/pantheon-se/go-composer)](LICENSE) [![Packagist Version](https://img.shields.io/packagist/v/pantheon-se/go-composer)](https://packagist.org/packages/pantheon-se/go-composer) [![Tests](https://github.com/pantheon-se/go-composer/actions/workflows/test.yml/badge.svg?branch=1.x)](https://github.com/Pantheon-SE/go-composer/actions)
 
 # Go Composer
 
@@ -39,7 +39,8 @@ Simply install the plugin, and the latest Go will be installed - **no other conf
 
 ## Configuration
 
-There are three parameters you can configure: 
+There are three parameters you can configure:
+
 - Go version (`go-version`)
 - The download url template for the Go binary archives (`go-download-url`).
 
@@ -50,7 +51,7 @@ In the Node download url, replace the following placeholders with your specific 
 - system architecture: `${architecture}`
 - file format `${format}`
 
-**Example composer.json with specific versions of Go** 
+**Example composer.json with specific versions of Go**
 
 ```json
 {
