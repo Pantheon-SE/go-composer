@@ -83,6 +83,14 @@ class BinLinker
 
         $binPath = str_replace('/', '\\', $binPath);
 
+        /*
+        @ECHO OFF
+        setlocal DISABLEDELAYEDEXPANSION
+        SET BIN_TARGET=%~dp0/jsonlint
+        SET COMPOSER_RUNTIME_BIN_DIR=%~dp0
+        php "%BIN_TARGET%" %*
+        */
+
         return "@ECHO OFF". PHP_EOL .
             "setlocal DISABLEDELAYEDEXPANSION". PHP_EOL .
             "set EXE_PATH=%~dp0\\".trim(ProcessExecutor::escape($binPath), '"\'').PHP_EOL.

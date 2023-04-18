@@ -124,8 +124,14 @@ class Installer implements InstallerInterface
             true
         );
 
-        $targetPath = $this->context->getVendorDir() . DIRECTORY_SEPARATOR . pathinfo(parse_url($downloadUri, PHP_URL_PATH), PATHINFO_BASENAME);
-        $targetPath = preg_replace('/\.(tar\.gz|zip)$/', '', $targetPath);
+        $targetPath1 = $this->context->getVendorDir() . DIRECTORY_SEPARATOR . pathinfo(parse_url($downloadUri, PHP_URL_PATH), PATHINFO_BASENAME);
+        $targetPath = preg_replace('/\.(tar\.gz|zip)$/', '', $targetPath1);
+
+        var_dump([
+            'target1' => $targetPath1,
+            'targetfinal' => $targetPath,
+            'filename' => $fileName
+        ]);
 
         $this->unpackExecutable($fileName, $targetPath);
 
@@ -179,8 +185,15 @@ class Installer implements InstallerInterface
             $fs->unlinkBin($link);
             // If Windows, replace with win executable.
             $execFile = ($this->context->getOsType() === 'windows') ? $exec['win'] : $exec['nix'];
-
-            $path = realpath($sourceDir . DIRECTORY_SEPARATOR . $execFile);
+            $execPath = $sourceDir . DIRECTORY_SEPARATOR . $execFile;
+            $path = realpath($execPath);
+            var_dump([
+                'link' => $link,
+                'sourceDir' => $sourceDir,
+                'execFile' => $execFile,
+                'execPath' => $execPath,
+                'path' => $path,
+            ]);
             $fs->linkBin($path, $link);
 
         }
