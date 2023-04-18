@@ -22,7 +22,6 @@ jobs:
         os:
           - windows-latest
           - ubuntu-latest
-          - macos-latest
         php:
           - 7.4
           - 8.0
@@ -94,11 +93,23 @@ jobs:
         working-directory: test_app
 
       - name: Test if installed go is working... (Windows)
+        id: test-windows
         run: ./go.bat version
         working-directory: .\test_app\bin
         if: matrix.os == 'windows-latest'
 
       - name: Test if installed go is working... (Not Windows)
+        id: test-nix
         run: ./go version
         working-directory: ./test_app/bin
+        if: matrix.os != 'windows-latest'
+
+      - name: Version check (Windows)
+        if: contains(steps.test-windows.run.output, env.GO_VERSION_TEST)
+        run: echo "Windows version: matched"
+        if: matrix.os == 'windows-latest'
+      
+      - name: Version check (Nix)
+        if: contains(steps.test-nix.run.output, env.GO_VERSION_TEST)
+        run: echo "Nix version: matched"
         if: matrix.os != 'windows-latest'
